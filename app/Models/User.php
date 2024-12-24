@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -29,6 +31,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'mobile',
+        'roles',
     ];
 
     /**
@@ -64,4 +68,48 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    function roles(): Attribute
+    {
+        return Attribute::make(
+            set: fn($val) => implode(',', $val),
+            get: fn($val) => explode(',', $val)
+        );
+    }
+
+    function name(): Attribute
+    {
+        return Attribute::make(
+            set: fn($val) => ucwords($val),
+            get: fn($val) => strtoupper($val)
+        );
+    }
+
+    function id(): Attribute
+    {
+        return Attribute::make(
+            get: fn($val) => strval($val)
+        );
+    }
+    function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    function comments(): HasMany
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    function reactions(): HasMany
+    {
+        return $this->hasMany(Reaction::class);
+    }
+
+    function replies(): HasMany
+    {
+        return $this->hasMany(Reply::class);
+    }
+
 }
