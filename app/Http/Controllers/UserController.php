@@ -13,19 +13,12 @@ class UserController extends Controller
      */
     public function index()
     {
-        // Get all users' data
-        // return User::get();
-        // return User::all();
 
-        // Get specific fields
-        // return User::all(['id', 'name', 'roles']);
-        // return User::get(['id', 'name', 'roles']);
+        $users = User::with('posts')->withCount('posts')->get();
 
-        // Get all user with count of posts for each user
+        // return view('users.index', ['users' => $users]);
+        return view('users.index', compact('users'));
 
-        // return User::with('posts')->get();
-        // return User::withCount('posts')->get();
-        return User::with('posts')->withCount('posts')->get();
     }
 
 
@@ -107,7 +100,7 @@ class UserController extends Controller
         $user = User::withTrashed()->where('id', $id)->first();
 
         if ($user->trashed()) {
-           return $user->restore();
+            return $user->restore();
         } else {
             return 'The user is already in your company';
         }
