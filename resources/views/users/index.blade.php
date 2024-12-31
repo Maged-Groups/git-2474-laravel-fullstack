@@ -1,20 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.inner')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>All Users</title>
+@section('title', 'All users')
 
-    @vite(['resources/css/app.css', 'resources/js/users.js'])
-
-</head>
-
-<body>
-
-
-
+@section('content')
     <h1 class="bg-red-500 text-red-50 p-5">All Users..</h1>
 
     @foreach ($users as $user)
@@ -29,8 +17,4 @@
 
         </div>
     @endforeach
-
-
-</body>
-
-</html>
+@endsection

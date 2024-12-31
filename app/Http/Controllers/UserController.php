@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -27,6 +28,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+
+        return $request;
 
         $data = $request->validated(); // return an array
 
@@ -57,6 +60,9 @@ class UserController extends Controller
             ->first();
     }
 
+    public function create () {
+        return view('users.create');
+    }
 
     /**
      * Update the specified resource in storage.
