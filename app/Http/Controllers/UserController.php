@@ -29,38 +29,33 @@ class UserController extends Controller
     public function store(StoreUserRequest $request)
     {
 
-        return $request;
+
 
         $data = $request->validated(); // return an array
 
-        // $data['roles'] = implode(',', $data['roles']);
-
-        // return $data;
+        $data['roles'] = ['user'];
 
 
-        return User::create($data);
+        $user = User::create($data);
+
+        if ($user) {
+            return redirect()
+                ->route('users.show', $user->id)
+                ->with('success', 'User Saved Successfully');
+        }
 
     }
 
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show(User $user)
     {
-        // Get single user with her/his posts and comments
-        // return User::
-        //     with('posts')
-        //     ->with('comments')
-        //     ->where('id', '=', $id)
-        //     ->first();
-
-        return User::
-            with(['posts.comments.user', 'posts.postStatus'])
-            ->where('id', '=', $id)
-            ->first();
+        return view('users.show', compact('user'));
     }
 
-    public function create () {
+    public function create()
+    {
         return view('users.create');
     }
 

@@ -8,9 +8,16 @@
     <title>@yield('title')</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
 </head>
 
 <body>
+
+    @session('success')
+        <div class="p-3 bg-green-200 text-green-900 font-bold text-xl rounded-md shadow-md mb-3">
+            {{ $value }}
+        </div>
+    @endsession
 
 
     @include('layouts.nav')
@@ -20,6 +27,8 @@
     <div class="p-4">
         @yield('content')
     </div>
+
+
 </body>
 
 </html>
